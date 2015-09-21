@@ -13,6 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+LOCAL_PATH := $(call my-dir)
+
 #
 # Definitions for installing Certificate Authority (CA) certificates
 #
@@ -30,7 +32,7 @@ endef
 define include-prebuilt-with-destination-directory
 include $$(CLEAR_VARS)
 LOCAL_MODULE := $(1)
-LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/CaCerts.mk
+LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/Android.mk
 LOCAL_MODULE_STEM := $(notdir $(2))
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_CLASS := ETC
@@ -39,7 +41,7 @@ LOCAL_SRC_FILES := $(2)
 include $$(BUILD_PREBUILT)
 endef
 
-cacerts := $(call all-files-under,luni/src/main/files/cacerts)
+cacerts := $(call all-files-under,files)
 
 cacerts_target_directory := $(TARGET_OUT)/etc/security/cacerts
 $(foreach cacert, $(cacerts), $(eval $(call include-prebuilt-with-destination-directory,target-cacert-$(notdir $(cacert)),$(cacert),$(cacerts_target_directory))))

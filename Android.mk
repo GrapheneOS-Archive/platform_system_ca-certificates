@@ -58,3 +58,5 @@ $(foreach cacert, $(cacerts), $(eval $(call include-prebuilt-with-destination-di
 cacerts_host := $(addprefix $(cacerts_host_directory)/,$(foreach cacert,$(cacerts),$(notdir $(cacert))))
 .PHONY: cacerts-host
 cacerts-host: $(cacerts_host)
+
+include $(call all-makefiles-under,$(LOCAL_PATH))

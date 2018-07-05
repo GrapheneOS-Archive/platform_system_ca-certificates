@@ -43,20 +43,31 @@ endef
 
 cacerts := $(call all-files-under,files)
 
-cacerts_target_directory := $(TARGET_OUT)/etc/security/cacerts
-$(foreach cacert, $(cacerts), $(eval $(call include-prebuilt-with-destination-directory,target-cacert-$(notdir $(cacert)),$(cacert),$(cacerts_target_directory))))
-cacerts_target := $(addprefix $(cacerts_target_directory)/,$(foreach cacert,$(cacerts),$(notdir $(cacert))))
-.PHONY: cacerts_target
-cacerts: $(cacerts_target)
+$(foreach cacert,$(cacerts),$(eval \
+  $(call include-prebuilt-with-destination-directory,\
+    target-cacert-$(notdir $(cacert)),\
+    $(cacert),\
+    $(TARGET_OUT)/etc/security/cacerts\
+  )\
+))
 
-# This is so that build/target/product/core.mk can use cacerts in PRODUCT_PACKAGES
-ALL_MODULES.cacerts.INSTALLED := $(cacerts_target)
+include $(CLEAR_VARS)
+LOCAL_MODULE := cacerts
+LOCAL_REQUIRED_MODULES := $(foreach cacert,$(cacerts),target-cacert-$(notdir $(cacert)))
+include $(BUILD_PHONY_PACKAGE)
 
-cacerts_host_directory := $(HOST_OUT)/etc/security/cacerts
-$(foreach cacert, $(cacerts), $(eval $(call include-prebuilt-with-destination-directory,host-cacert-$(notdir $(cacert)),$(cacert),$(cacerts_host_directory))))
+$(foreach cacert,$(cacerts),$(eval \
+  $(call include-prebuilt-with-destination-directory,\
+    host-cacert-$(notdir $(cacert)),\
+    $(cacert),\
+    $(HOST_OUT)/etc/security/cacerts\
+  )\
+))
 
-cacerts_host := $(addprefix $(cacerts_host_directory)/,$(foreach cacert,$(cacerts),$(notdir $(cacert))))
-.PHONY: cacerts-host
-cacerts-host: $(cacerts_host)
+include $(CLEAR_VARS)
+LOCAL_MODULE := cacerts-host
+LOCAL_IS_HOST_MODULE := true
+LOCAL_REQUIRED_MODULES := $(foreach cacert,$(cacerts),host-cacert-$(notdir $(cacert)))
+include $(BUILD_PHONY_PACKAGE)
 
 include $(call all-makefiles-under,$(LOCAL_PATH))

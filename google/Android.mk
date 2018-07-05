@@ -17,18 +17,29 @@ LOCAL_PATH := $(call my-dir)
 
 cacerts_google := $(call all-files-under,files)
 
-cacerts_google_target_directory := $(TARGET_OUT)/etc/security/cacerts_google
-$(foreach cacert, $(cacerts_google), $(eval $(call include-prebuilt-with-destination-directory,target-cacert-google-$(notdir $(cacert)),$(cacert),$(cacerts_google_target_directory))))
-cacerts_google_target := $(addprefix $(cacerts_google_target_directory)/,$(foreach cacert,$(cacerts_google),$(notdir $(cacert))))
-.PHONY: cacerts_google_target
-cacerts_google: $(cacerts_google_target)
+$(foreach cacert,$(cacerts_google),$(eval \
+	$(call include-prebuilt-with-destination-directory,\
+		target-cacert-google-$(notdir $(cacert)),\
+		$(cacert),\
+		$(TARGET_OUT)/etc/security/cacerts_google\
+	)\
+))
 
-# This is so that build/target/product/core.mk can use cacerts_google in PRODUCT_PACKAGES
-ALL_MODULES.cacerts_google.INSTALLED := $(cacerts_google_target)
+include $(CLEAR_VARS)
+LOCAL_MODULE := cacerts_google
+LOCAL_REQUIRED_MODULES := $(foreach cacert,$(cacerts_google),target-cacert-google-$(notdir $(cacert)))
+include $(BUILD_PHONY_PACKAGE)
 
-cacerts_google_host_directory := $(HOST_OUT)/etc/security/cacerts_google
-$(foreach cacert, $(cacerts_google), $(eval $(call include-prebuilt-with-destination-directory,host-cacert-google-$(notdir $(cacert)),$(cacert),$(cacerts_google_host_directory))))
+$(foreach cacert,$(cacerts_google),$(eval \
+	$(call include-prebuilt-with-destination-directory,\
+		host-cacert-google-$(notdir $(cacert)),\
+		$(cacert),\
+		$(HOST_OUT)/etc/security/cacerts_google\
+	)\
+))
 
-cacerts_google_host := $(addprefix $(cacerts_google_host_directory)/,$(foreach cacert,$(cacerts_google),$(notdir $(cacert))))
-.PHONY: cacerts_google-host
-cacerts_google-host: $(cacerts_google_host)
+include $(CLEAR_VARS)
+LOCAL_MODULE := cacerts_google-host
+LOCAL_IS_HOST_MODULE := true
+LOCAL_REQUIRED_MODULES := $(foreach cacert,$(cacerts_google),host-cacert-google-$(notdir $(cacert)))
+include $(BUILD_PHONY_PACKAGE)

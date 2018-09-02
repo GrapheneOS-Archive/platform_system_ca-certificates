@@ -21,7 +21,7 @@ cacerts_wfa := $(call all-files-under,files)
 cacerts_wfa_target_directory := $(TARGET_OUT)/etc/security/cacerts_wfa
 $(foreach cacert, $(cacerts_wfa), $(eval $(call include-prebuilt-with-destination-directory,target-cacert-wifi-$(notdir $(cacert)),$(cacert),$(cacerts_wfa_target_directory))))
 cacerts_wfa_target := $(addprefix $(cacerts_wfa_target_directory)/,$(foreach cacert,$(cacerts_wfa),$(notdir $(cacert))))
-.PHONY: cacerts_wfa_target
+.PHONY: cacerts_wfa
 cacerts_wfa: $(cacerts_wfa_target)
 
 # This is so that build/target/product/core.mk can use cacerts_wfa in PRODUCT_PACKAGES

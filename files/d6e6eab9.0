@@ -34,7 +34,7 @@ Certificate:
     Data:
         Version: 3 (0x2)
         Serial Number: 1 (0x1)
-    Signature Algorithm: sha256WithRSAEncryption
+        Signature Algorithm: sha256WithRSAEncryption
         Issuer: C=FR, O=Certinomis, OU=0002 433998903, CN=Certinomis - Root CA
         Validity
             Not Before: Oct 21 09:17:18 2013 GMT
@@ -42,7 +42,7 @@ Certificate:
         Subject: C=FR, O=Certinomis, OU=0002 433998903, CN=Certinomis - Root CA
         Subject Public Key Info:
             Public Key Algorithm: rsaEncryption
-                Public-Key: (4096 bit)
+                RSA Public-Key: (4096 bit)
                 Modulus:
                     00:d4:cc:09:0a:2c:3f:92:f6:7f:14:9e:0b:9c:9a:
                     6a:1d:40:30:64:fd:aa:df:0e:1e:06:5b:9f:50:85:

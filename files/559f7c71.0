@@ -17,7 +17,7 @@ Certificate:
         Version: 3 (0x2)
         Serial Number:
             11:20:e6:f8:4c:fc:24:b0:be:05:40:ac:da:83:1b:34:60:3f
-    Signature Algorithm: ecdsa-with-SHA384
+        Signature Algorithm: ecdsa-with-SHA384
         Issuer: C=FR, O=OpenTrust, CN=OpenTrust Root CA G3
         Validity
             Not Before: May 26 00:00:00 2014 GMT
